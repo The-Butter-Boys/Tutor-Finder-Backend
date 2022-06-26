@@ -20,6 +20,6 @@ class User(db.Model):
 
 @app.route('/users')
 def users():
-    return jsonify([{'name': 'Colin'}, {'name': 'Dexter'}, {'name': 'Bob'}])
+    return jsonify([{'name': 'Colifjkdfn'}, {'name': 'Dexter'}, {'name': 'Bob'}])
 
 
