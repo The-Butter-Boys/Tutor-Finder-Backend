@@ -1,8 +1,7 @@
-
 ### \<User\>
 ```
 {
-  user_id: <int>,
+  id: <int>,
   username: <string>,
   email: <string>,
   tutor_courses: [<Course>, ..., <Course>],

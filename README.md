@@ -12,3 +12,6 @@
 
 `pip install -r requirements.txt`
 
+## Run app 
+
+`flask run`
