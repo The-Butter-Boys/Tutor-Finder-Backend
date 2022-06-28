@@ -1,6 +1,7 @@
 from flask import Flask, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
+from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
 CORS(app)
@@ -12,12 +13,18 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
 class User(db.Model):
-    __tablename__ = 'user'
+    # Table is called 'app_user' because 'user' would conflict with postgres keyword
+    __tablename__ = 'app_user'
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(200), unique=True)
+    username = db.Column(db.String(64), unique=True)
+    email = db.Column(db.String(120), unique=True)
+    password_hash = db.Column(db.String(128))
 
-    def __init__(self, username):
-        self.username = username
+    def set_password(self, password):
+        self.password_hash = generate_password_hash(password)
+
+    def check_password(self, password):
+        return check_password_hash(self.password_hash, password)
 
     def __str__(self):
         return f"<User {self.id}: {self.username}>"
@@ -36,7 +43,19 @@ def users():
 @app.route('/users', methods=['POST'])
 def add_user():
     username = request.json['username']
-    user = User(username)
-    db.session.add(user)
-    db.session.commit()
-    return 'response'
+    password = request.json['password']
+    email = request.json['email']
+
+    pw_hash = generate_password_hash(password)
+    # user = User(username)
+    # db.session.add(user)
+    # db.session.commit()
+    print(pw_hash)
+    return jsonify({'username': username, 'password': password, 'password_hash': pw_hash, 'email': email})
+
+# @app.route('/users/login')
+# def login():
+#     username = request.json['username']
+#     password = request.json['password']
+#     pw_hash = generate_password_hash(password)
+#     success = check_password_hash(pwhash, password)

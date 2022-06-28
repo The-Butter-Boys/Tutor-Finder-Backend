@@ -1,3 +1,5 @@
+## Objects Returned From API Routes
+
 ### \<User\>
 ```
 {
@@ -21,11 +23,20 @@
 ```
 
 ## API Routes
+
+### GET routes
+
+
+<hr>
+
 ### `/users`
 
 Returns all users
 
 RETURNS: `[<User>, ..., <User>]`
+
+
+<hr>
 
 ### `/users/<id>`
 
@@ -33,11 +44,8 @@ Returns user by id
 
 RETURNS: `<User>`
 
-### `/users/<id>/courses`
 
-Returns all courses of user by id
-
-RETURNS: `[<Course>, ..., <Course>]`
+<hr>
 
 ### `/users/<id>/courses/student`
 
@@ -45,11 +53,17 @@ Returns all student courses of user by id
 
 RETURNS: `[<Course>, ..., <Course>]`
 
+
+<hr>
+
 ### `/users/<id>/courses/tutor`
 
 Returns all tutor courses of user by id
 
 RETURNS: `[<Course>, ..., <Course>]`
+
+
+<hr>
 
 ### `/tutors`
 
@@ -57,17 +71,24 @@ Returns all tutors
 
 RETURNS: `[<User>, ..., <User>]`
 
+
+<hr>
+
 ### `/students`
 
 Returns all students
 
 RETURNS: `[<User>, ..., <User>]`
 
+<hr>
+
 ### `/courses`
 
-Returns all courses
+Returns all courses available in the catalog
 
 RETURNS: `[<Course>, ..., <Course>]`
+
+<hr>
 
 ### `/courses/<id>`
 
@@ -76,13 +97,36 @@ Returns course by id
 RETURNS: `<Course>`
 
 
-## Model Schemas
+<hr>
 
+### POST routes
+
+
+<hr>
+
+### `/users`
+
+EXPECTS: 
+
+```
+{
+  username: <string>,
+  password: <string>,
+  email: <string>
+}
+```
+
+<hr>
+
+
+## Model Schemas
+**i.e. what the database tables store**
 ### USERS
 ```
 {
   id: <int>,
   username: <string>,
+  password_hash: <string>,
   email: <string>,
   rating: <double>
 }
