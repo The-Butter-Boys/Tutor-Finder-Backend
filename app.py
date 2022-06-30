@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, Response
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -20,6 +20,11 @@ class User(db.Model):
     email = db.Column(db.String(120), unique=True)
     password_hash = db.Column(db.String(128))
 
+    def __init__(self, username, email, password):
+        self.username = username
+        self.email = email
+        self.set_password(password)
+
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
 
@@ -30,7 +35,7 @@ class User(db.Model):
         return f"<User {self.id}: {self.username}>"
 
     def to_dict(self):
-        dict = {'id': self.id, 'username': self.username}
+        dict = {'id': self.id, 'username': self.username, 'email': self.email}
         return dict
 
 
@@ -46,16 +51,22 @@ def add_user():
     password = request.json['password']
     email = request.json['email']
 
+    if User.query.filter_by(username=username).first():
+        return Response("{response", status=400, mimetype='application/json')
+        return {'response': 'That username is taken'}
     pw_hash = generate_password_hash(password)
-    # user = User(username)
-    # db.session.add(user)
-    # db.session.commit()
-    print(pw_hash)
-    return jsonify({'username': username, 'password': password, 'password_hash': pw_hash, 'email': email})
+    user = User(username, email, password)
+    db.session.add(user)
+    db.session.commit()
+    return 'response'
 
-# @app.route('/users/login')
-# def login():
-#     username = request.json['username']
-#     password = request.json['password']
-#     pw_hash = generate_password_hash(password)
-#     success = check_password_hash(pwhash, password)
+@app.route('/login', methods=['POST'])
+def login():
+    username = request.json['username']
+    user = User.query.filter_by(username=username).first()
+    if user is None:
+        return 
+    password = request.json['password']
+    # TODO: validate username and password
+    success = user.check_password(password)
+    return {'success': success}
