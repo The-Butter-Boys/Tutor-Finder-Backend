@@ -138,6 +138,7 @@ EXPECTS:
   id: <int>,
   department: <string>,
   course_number: <string>,
+  course_name: <string>
 }
 ```
 
