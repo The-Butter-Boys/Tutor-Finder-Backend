@@ -38,6 +38,13 @@ class User(db.Model):
         dict = {'id': self.id, 'username': self.username, 'email': self.email}
         return dict
 
+class Course(db.Model):
+    __tablename__ = 'course'
+    id = db.Column(db.Integer, primary_key=True)
+    department = db.Column(db.String(64))
+    number = db.Column(db.String(64))
+    name = db.Column(db.String(64))
+
 
 @app.route('/users')
 def users():
