@@ -45,11 +45,21 @@ class Course(db.Model):
     number = db.Column(db.String(64))
     name = db.Column(db.String(64))
 
+    def to_dict(self):
+        dict = {'id': self.id, 'department': self.department, 'number': self.number, 'name': self.name}
+        return dict
+
 
 @app.route('/users')
 def users():
     users = User.query.all()
     data = [user.to_dict() for user in users]
+    return jsonify(data)
+
+@app.route('/courses')
+def courses():
+    courses = Course.query.all()
+    data = [course.to_dict() for course in courses]
     return jsonify(data)
 
 @app.route('/users', methods=['POST'])
