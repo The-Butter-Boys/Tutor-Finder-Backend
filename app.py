@@ -70,19 +70,32 @@ def add_user():
 
     if User.query.filter_by(username=username).first():
         return Response("{response", status=400, mimetype='application/json')
-        return {'response': 'That username is taken'}
     pw_hash = generate_password_hash(password)
     user = User(username, email, password)
     db.session.add(user)
     db.session.commit()
     return 'response'
 
+@app.route('/courses', methods=['POST'])
+def add_course():
+    department = request.json['department']
+    number = request.json['number']
+    name = request.json['name']
+
+    course = Course(department=department, number=number, name=name)
+    db.session.add(course)
+    db.session.commit()
+    return 'response'
+
+
+
+
 @app.route('/login', methods=['POST'])
 def login():
     username = request.json['username']
     user = User.query.filter_by(username=username).first()
     if user is None:
-        return 
+        return {'success': False}
     password = request.json['password']
     # TODO: validate username and password
     success = user.check_password(password)

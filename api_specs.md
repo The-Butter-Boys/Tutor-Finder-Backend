@@ -1,3 +1,34 @@
+## Model Schemas
+**i.e. what the database tables store**
+### USERS
+```
+{
+  id: <int>,
+  username: <string>,
+  password_hash: <string>,
+  email: <string>,
+}
+```
+
+### COURSES
+```
+{
+  id: <int>,
+  department: <string>,
+  number: <string>,
+  name: <string>
+}
+```
+
+### USER COURSES
+```
+{
+  id: <int>,
+  user_id: <int>,
+  course_id: <int>,
+  type: <enum: 'student' or 'tutor'>
+}
+```
 ## Objects Returned From API Routes
 
 ### \<User\>
@@ -16,9 +47,9 @@
 ```
 {
   id: <int>,
-  course_name: <string>,
   department: <string>,
-  catalog_number: <string>
+  number: <string>
+  name: <string>,
 }
 ```
 
@@ -118,36 +149,15 @@ EXPECTS:
 
 <hr>
 
+### `/courses`
 
-## Model Schemas
-**i.e. what the database tables store**
-### USERS
+EXPECTS:
+
 ```
 {
-  id: <int>,
-  username: <string>,
-  password_hash: <string>,
-  email: <string>,
-  rating: <double>
-}
-```
-
-### COURSES
-```
-{
-  id: <int>,
   department: <string>,
-  course_number: <string>,
-  course_name: <string>
+  number: <string>,
+  name: <string>
 }
 ```
-
-### USER COURSES
-```
-{
-  id: <int>,
-  user_id: <int>,
-  course_id: <int>,
-  type: <enum: 'student' or 'tutor'>
-}
-```
+<hr>
