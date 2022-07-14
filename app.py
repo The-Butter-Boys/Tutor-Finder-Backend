@@ -12,6 +12,8 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
 
+if __name__ == '__main__':
+	app.run()
 class User(db.Model):
     # Table is called 'app_user' because 'user' would conflict with postgres keyword
     __tablename__ = 'app_user'
