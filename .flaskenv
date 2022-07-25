@@ -1,2 +1,2 @@
-FLASK_APP=app
+FLASK_APP=tutor_finder
 FLASK_ENV=development
