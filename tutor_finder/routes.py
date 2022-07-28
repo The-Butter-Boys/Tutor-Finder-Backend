@@ -1,6 +1,10 @@
 from flask import jsonify, request, Response
 from tutor_finder import app
 from tutor_finder.models import User, Course
+from flask_sqlalchemy import SQLAlchemy 
+from werkzeug.security import generate_password_hash
+
+db = SQLAlchemy(app)
 
 @app.route('/users')
 def users():
@@ -34,21 +38,20 @@ def add_course():
     number = request.json['number']
     name = request.json['name']
 
+    if Course.query.filter_by(name=name).first():
+        return {'success': False}
     course = Course(department=department, number=number, name=name)
     db.session.add(course)
     db.session.commit()
     return 'response'
 
-
-
-
 @app.route('/login', methods=['POST'])
 def login():
     username = request.json['username']
     user = User.query.filter_by(username=username).first()
-    if user is None:
-        return {'success': False}
     password = request.json['password']
-    # TODO: validate username and password
-    success = user.check_password(password)
-    return {'success': success}
+
+    if user and user.check_password(password):
+        return {'success': True}
+    else:
+        return {'success': False}
