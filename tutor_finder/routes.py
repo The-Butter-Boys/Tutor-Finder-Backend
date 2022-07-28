@@ -43,7 +43,7 @@ def add_course():
     course = Course(department=department, number=number, name=name)
     db.session.add(course)
     db.session.commit()
-    return 'response'
+    return {'success': True}
 
 @app.route('/login', methods=['POST'])
 def login():
