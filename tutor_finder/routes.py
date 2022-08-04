@@ -105,11 +105,8 @@ def add_user_course():
 	current_user_id = get_jwt_identity()
 	user = User.query.filter_by(id=current_user_id).first()
 	course = Course.query.filter_by(id=course_id).first()
-	print(f'\nuser: {user.to_dict()}\n')
-	print(f'\ncourse: {course}\n')
 	user.courses.append(course)
 	db.session.commit()
-	print(f'\nuser.courses:{user.courses}\n')
 	# TODO: better response
 	return {'response': 'Success??'}, 200
 	

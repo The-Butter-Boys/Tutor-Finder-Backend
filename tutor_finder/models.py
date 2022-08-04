@@ -4,7 +4,8 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 user_course = db.Table('user_course',
 	db.Column('user_id', db.Integer, db.ForeignKey('app_user.id')),
-	db.Column('course_id', db.Integer, db.ForeignKey('course.id'))
+	db.Column('course_id', db.Integer, db.ForeignKey('course.id')),
+	db.Column('user_type', db.String(128)) # type is either 'student' or 'tutor'
 )
 
 
