@@ -1,3 +1,6 @@
+## This is more of a brainstorming area for before we started on the codebase--Not proper, up-to-date API documentation.
+
+
 ## Model Schemas
 **i.e. what the database tables store**
 ### USERS
