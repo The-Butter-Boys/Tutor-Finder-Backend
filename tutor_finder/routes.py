@@ -64,14 +64,6 @@ def login():
 def logout():
 	current_user_id = get_jwt_identity()
 
-# Test data for logged in users; returns data specific to the user
-@app.route('/test', methods=['GET'])
-@jwt_required()
-def test():
-	current_user_id = get_jwt_identity()
-	user = User.query.filter_by(id=current_user_id).first()
-	return jsonify(username=user.username, email=user.email, id=user.id), 200
-
 @app.route('/user', methods=['GET'])
 @jwt_required()
 def get_current_user():
@@ -133,7 +125,7 @@ def add_course():
 	course = Course(department=department, number=number, name=name)
 	db.session.add(course)
 	db.session.commit()
-	return jsonify(department=department, number=number, name=name), 200
+	return jsonify(department=department, number=number, name=name, id=course.id), 200
 
 ########## routes made before are below ##########
 
