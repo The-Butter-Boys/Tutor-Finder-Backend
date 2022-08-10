@@ -3,6 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_cors import CORS
 from flask_jwt_extended import JWTManager
+from datetime import timedelta
 
 app = Flask(__name__)
 CORS(app)
@@ -13,6 +14,7 @@ db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
 app.config['JWT_SECRET_KEY'] = 'super-secret' # FIXME: change this. config file?
+# app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(seconds=15)
 jwt = JWTManager(app)
 
 import tutor_finder.routes

@@ -101,7 +101,6 @@ def add_user_course():
 	db.session.commit()
 	# TODO: better response
 	return {'response': 'Success??'}, 200
-	
 
 
 @app.route('/courses', methods=['GET'])
@@ -126,6 +125,17 @@ def add_course():
 	db.session.add(course)
 	db.session.commit()
 	return jsonify(department=department, number=number, name=name, id=course.id), 200
+
+
+@app.route('/courses/<course_id>/users')
+@jwt_required()
+def get_course_users(course_id):
+	course = Course.query.filter_by(id=course_id).first()
+	if course is None:
+		return {'response': 'Invalid course id'}, 400
+
+	course_users = [user.to_dict() for user in course.enrolled]
+	return {'users': course_users}
 
 ########## routes made before are below ##########
 

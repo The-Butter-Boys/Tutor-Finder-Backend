@@ -46,3 +46,4 @@ class Course(db.Model):
 	def to_dict(self):
 		dict = {'id': self.id, 'department': self.department, 'number': self.number, 'name': self.name}
 		return dict
+
